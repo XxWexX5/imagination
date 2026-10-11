@@ -49,7 +49,7 @@ export function Home() {
 					</motion.div>
 				</div>
 
-				<div className="pointer-events-none absolute inset-0 flex items-center justify-end md:pointer-events-auto md:relative md:flex-1">
+				<div className="pointer-events-none absolute inset-0 flex items-center justify-center md:pointer-events-auto md:relative md:flex-1 md:justify-center">
 					<div className="container-animation opacity-20 md:opacity-100">
 						<ImaginationSvg aria-hidden="true" />
 					</div>

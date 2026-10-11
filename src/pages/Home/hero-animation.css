@@ -1,5 +1,17 @@
 .container-animation svg {
-	width: 61em;
+	width: 38em;
+}
+
+@media (min-width: 1280px) {
+	.container-animation svg {
+		width: 50em;
+	}
+}
+
+@media (min-width: 1536px) {
+	.container-animation svg {
+		width: 61em;
+	}
 }
 
 #hat {
