@@ -11,7 +11,9 @@ test.describe("Header", () => {
 	test("displays the wordmark", async ({ page }) => {
 		await page.goto("/");
 
-		await expect(page.getByText("FOSTER THE PEOPLE")).toBeVisible();
+		await expect(
+			page.getByRole("link", { name: "FOSTER THE PEOPLE" }),
+		).toBeVisible();
 	});
 
 	test("displays all navigation links on desktop", async ({ page }) => {

@@ -5,7 +5,7 @@ test.describe("Home page", () => {
 		await page.goto("/");
 
 		await expect(
-			page.getByRole("heading", { level: 1, name: "Imagination" }),
+			page.getByRole("heading", { level: 1, name: "IMAGINATION" }),
 		).toBeVisible();
 	});
 
@@ -20,7 +20,7 @@ test.describe("Home page", () => {
 
 		const heading = page.getByRole("heading", {
 			level: 1,
-			name: "Imagination",
+			name: "IMAGINATION",
 		});
 		await expect(heading).toBeVisible();
 		await expect(heading).toHaveCSS("opacity", "1");
