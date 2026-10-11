@@ -1,13 +1,18 @@
 .container-animation svg {
-	position: relative;
-	right: 21%;
-	width: 61em;
+	width: 38em;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 768px) and (max-width: 1535px) {
 	.container-animation svg {
-		position: static;
-		width: 38em;
+		position: relative;
+		right: 21%;
+		width: 61em;
+	}
+}
+
+@media (min-width: 1536px) {
+	.container-animation svg {
+		width: 61em;
 	}
 }
 
