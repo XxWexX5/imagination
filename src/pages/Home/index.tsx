@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import ImaginationSvg from "../../assets/imagination.svg?react";
+import ImaginationSvg from "../../assets/images/imagination.svg?react";
 import { ListenPopover } from "../../components/ListenPopover/index.tsx";
 import "./hero-animation.css";
 

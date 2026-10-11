@@ -1,3 +1,4 @@
+import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
@@ -13,7 +14,9 @@ interface ImageCarouselProps {
 
 export function ImageCarousel({ images }: ImageCarouselProps) {
 	const [selectedIndex, setSelectedIndex] = useState(0);
-	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+		Autoplay({ delay: 4000, stopOnInteraction: true }),
+	]);
 
 	const onSelect = useCallback(() => {
 		if (!emblaApi) return;

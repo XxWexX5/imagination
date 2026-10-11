@@ -39,6 +39,31 @@ Object.defineProperty(window, "matchMedia", {
 	}),
 });
 
+class AudioStub extends EventTarget {
+	src = "";
+	currentTime = 0;
+	duration = 0;
+	paused = true;
+	play() {
+		this.paused = false;
+		return Promise.resolve();
+	}
+	pause() {
+		this.paused = true;
+	}
+	load() {}
+	removeAttribute() {}
+	addEventListener(type: string, listener: EventListener) {
+		super.addEventListener(type, listener);
+		if (type === "loadedmetadata") {
+			this.duration = 180;
+			setTimeout(() => this.dispatchEvent(new Event("loadedmetadata")), 0);
+		}
+	}
+}
+
+vi.stubGlobal("Audio", AudioStub);
+
 beforeAll(() => server.listen({ onUnhandledFrame: "error" }));
 
 afterEach(() => {

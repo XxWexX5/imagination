@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Home } from "./index.tsx";
 
-vi.mock("../../assets/imagination.svg?react", () => ({
+vi.mock("../../assets/images/imagination.svg?react", () => ({
 	default: (props: Record<string, unknown>) => (
 		<svg data-testid="imagination-svg" {...props} />
 	),
