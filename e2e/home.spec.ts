@@ -9,12 +9,6 @@ test.describe("Home page", () => {
 		).toBeVisible();
 	});
 
-	test("renders the hello world text", async ({ page }) => {
-		await page.goto("/");
-
-		await expect(page.getByText("hello world!")).toBeVisible();
-	});
-
 	test("has the correct page title", async ({ page }) => {
 		await page.goto("/");
 

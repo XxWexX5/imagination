@@ -29,10 +29,12 @@
 - `pnpm test:e2e` — Playwright (faz build e sobe o preview na porta 4173)
 
 ## Estrutura
-- `src/main.tsx` — providers globais (QueryClient, Lenis); `src/App.tsx` — a página
+- `src/main.tsx` — providers globais (QueryClient, Lenis); `src/App.tsx` — composição de layout
+- `src/components/<Nome>/index.tsx` — componentes reutilizáveis (Header, Footer, etc.)
+- `src/pages/<Nome>/index.tsx` — seções/páginas da aplicação (Home, etc.)
 - `src/lib/query-client.ts` — `createQueryClient()`
 - `src/test/setup.ts` — setup do Vitest (jest-dom, MSW); handlers em `src/test/msw/handlers.ts`
-- Testes unitários ao lado do código (`src/**/*.test.tsx`); e2e em `e2e/`
+- Testes unitários ao lado do código (`src/**/Nome.test.tsx`); e2e em `e2e/`
 
 ## Convenções de código
 - Formatação padrão do Biome: tabs e aspas duplas
@@ -52,3 +54,5 @@ Registro das escolhas feitas ao longo do projeto, com o motivo.
 - **E2E roda contra o build de produção** (`vite preview`) — testa o que será publicado, não o dev server.
 - **Playwright só com Chromium** — suficiente para o início; adicionar outros browsers quando necessário.
 - **Gitmoji nos commits** — emoji no início da mensagem para identificar visualmente o tipo de mudança; segue a convenção [gitmoji.dev](https://gitmoji.dev).
+- **Organização por pastas com `index.tsx`** — componentes em `src/components/<Nome>/index.tsx`, páginas em `src/pages/<Nome>/index.tsx`; testes ao lado (`Nome.test.tsx`).
+- **lucide-react para ícones** — tree-shakeable, leve e com catálogo amplo.

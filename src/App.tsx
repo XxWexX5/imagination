@@ -1,17 +1,13 @@
-import { motion } from "motion/react";
+import { Header } from "./components/Header/index.tsx";
+import { Home } from "./pages/Home/index.tsx";
 
 export function App() {
 	return (
-		<main className="grid min-h-dvh place-items-center">
-			<motion.h1
-				className="font-bold text-6xl tracking-tight"
-				initial={{ opacity: 0, y: 16 }}
-				animate={{ opacity: 1, y: 0 }}
-			>
-				Imagination
-			</motion.h1>
-
-			<p>hello world!</p>
-		</main>
+		<>
+			<Header />
+			<main className="pt-[66px]">
+				<Home />
+			</main>
+		</>
 	);
 }
