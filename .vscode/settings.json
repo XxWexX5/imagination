@@ -1,0 +1,8 @@
+{
+	"claude.commitMessageInstructions": "Use Gitmoji (gitmoji.dev) convention. Start every commit message with the appropriate emoji followed by the Conventional Commits type and description. Format: <emoji> <type>: <description>. Examples: ✨ feat: add hero section, 🐛 fix: correct nav link, ♻️ refactor: extract button component, 📝 docs: update README, 🎨 style: adjust spacing, ✅ test: add unit tests, 🔧 chore: update config, 🔥 remove: delete unused code, 💄 ui: redesign card. Write the description in the language that best matches the changes (Portuguese if the codebase/comments are in Portuguese, English otherwise). Keep the message concise — one line.",
+	"github.copilot.chat.commitMessageGeneration.instructions": [
+		{
+			"text": "Use Gitmoji (gitmoji.dev) convention. Start every commit message with the appropriate emoji followed by the Conventional Commits type and description. Format: <emoji> <type>: <description>. Examples: ✨ feat: add hero section, 🐛 fix: correct nav link, ♻️ refactor: extract button component, 📝 docs: update README."
+		}
+	]
+}
