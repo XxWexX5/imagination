@@ -1,9 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
-import comingAge from "../../assets/images/coming-age.jpg";
-import fosterThePeople from "../../assets/images/foster-the-people.jpg";
-import supermodel from "../../assets/images/supermodel.jpg";
-import torches from "../../assets/images/torches.jpg";
+import comingAge from "../../assets/images/coming-age.webp";
+import fosterThePeople from "../../assets/images/foster-the-people.webp";
+import supermodel from "../../assets/images/supermodel.webp";
+import torches from "../../assets/images/torches.webp";
 import { ImageCarousel } from "../../components/ImageCarousel/index.tsx";
 
 const artworks = [

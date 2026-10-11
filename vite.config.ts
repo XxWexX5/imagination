@@ -5,6 +5,14 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	plugins: [react(), tailwindcss(), svgr()],
+	preview: {
+		headers: {
+			"Cache-Control": "public, max-age=31536000, immutable",
+		},
+	},
+	build: {
+		assetsInlineLimit: 0,
+	},
 	test: {
 		globals: true,
 		environment: "jsdom",
