@@ -20,18 +20,24 @@ test.describe("Hero section", () => {
 	});
 
 	test("displays tagline", async ({ page }) => {
-		await expect(page.getByText(/REAL PLACES LIVE IN/)).toBeVisible();
-		await expect(page.getByText(/YOUR IMAGINATION/)).toBeVisible();
+		await expect(
+			page.locator("#home").getByText(/REAL PLACES LIVE IN/),
+		).toBeVisible();
+		await expect(
+			page.locator("#home").getByText(/YOUR IMAGINATION/),
+		).toBeVisible();
 	});
 
 	test("displays LISTEN NOW button", async ({ page }) => {
 		await expect(
-			page.getByRole("button", { name: /LISTEN NOW/ }),
+			page.locator("#home").getByRole("button", { name: /LISTEN NOW/ }),
 		).toBeVisible();
 	});
 
 	test("popover opens and closes on CTA click", async ({ page }) => {
-		const button = page.getByRole("button", { name: /LISTEN NOW/ });
+		const button = page
+			.locator("#home")
+			.getByRole("button", { name: /LISTEN NOW/ });
 
 		await button.click();
 		await expect(page.getByRole("menu")).toBeVisible();
@@ -41,7 +47,10 @@ test.describe("Hero section", () => {
 	});
 
 	test("popover shows all options", async ({ page }) => {
-		await page.getByRole("button", { name: /LISTEN NOW/ }).click();
+		await page
+			.locator("#home")
+			.getByRole("button", { name: /LISTEN NOW/ })
+			.click();
 
 		await expect(page.getByRole("menuitem", { name: /Spotify/ })).toBeVisible();
 		await expect(page.getByRole("menuitem", { name: /YouTube/ })).toBeVisible();
@@ -51,7 +60,10 @@ test.describe("Hero section", () => {
 	});
 
 	test("popover closes on click outside", async ({ page }) => {
-		await page.getByRole("button", { name: /LISTEN NOW/ }).click();
+		await page
+			.locator("#home")
+			.getByRole("button", { name: /LISTEN NOW/ })
+			.click();
 		await expect(page.getByRole("menu")).toBeVisible();
 
 		await page.locator("h1").click();
@@ -78,7 +90,7 @@ test.describe("Hero section — mobile", () => {
 
 	test("LISTEN NOW button is visible on mobile", async ({ page }) => {
 		await expect(
-			page.getByRole("button", { name: /LISTEN NOW/ }),
+			page.locator("#home").getByRole("button", { name: /LISTEN NOW/ }),
 		).toBeVisible();
 	});
 });
