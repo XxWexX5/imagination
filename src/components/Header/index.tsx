@@ -38,7 +38,7 @@ export function Header() {
 	return (
 		<header className="fixed top-0 right-0 left-0 z-50 border-b border-lavender/20 bg-[#120E1F]">
 			<nav
-				className="mx-auto flex h-[66px] max-w-[1440px] items-center justify-between px-6 md:px-16"
+				className="mx-auto flex h-[66px] max-w-[1440px] items-center justify-between px-6 md:px-16 lg:px-[84px]"
 				aria-label="Main navigation"
 			>
 				<a
