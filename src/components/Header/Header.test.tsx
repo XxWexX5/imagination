@@ -21,7 +21,7 @@ describe("Header", () => {
 		render(<Header />);
 
 		expect(
-			screen.getByRole("link", { name: /listen now/i }),
+			screen.getByRole("button", { name: /listen now/i }),
 		).toBeInTheDocument();
 	});
 

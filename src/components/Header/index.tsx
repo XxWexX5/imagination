@@ -1,6 +1,7 @@
-import { Menu, Play, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
+import { ListenPopover } from "../ListenPopover/index.tsx";
 
 const NAV_LINKS = [
 	{ label: "HOME", href: "#home" },
@@ -70,15 +71,9 @@ export function Header() {
 				</ul>
 
 				<div className="flex items-center gap-4">
-					<a
-						href="#listen"
-						className="flex h-[42px] w-[144px] items-center gap-2 rounded-full border border-ivory px-4 transition-colors hover:bg-ivory/10"
-					>
-						<Play size={14} className="fill-yellow text-yellow" />
-						<span className="font-body text-[10px] font-bold tracking-[1.1px] text-ivory">
-							LISTEN NOW
-						</span>
-					</a>
+					<div className="hidden md:block">
+						<ListenPopover direction="down" size="compact" />
+					</div>
 
 					<button
 						type="button"

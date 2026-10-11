@@ -29,7 +29,9 @@ test.describe("Header", () => {
 	test("displays the Listen Now CTA", async ({ page }) => {
 		await page.goto("/");
 
-		await expect(page.getByRole("link", { name: /listen now/i })).toBeVisible();
+		await expect(
+			page.getByRole("button", { name: /listen now/i }).first(),
+		).toBeVisible();
 	});
 
 	test("navigation links scroll to sections", async ({ page }) => {

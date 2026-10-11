@@ -37,7 +37,15 @@ const LISTEN_OPTIONS = [
 	},
 ] as const;
 
-export function ListenPopover() {
+interface ListenPopoverProps {
+	direction?: "up" | "down";
+	size?: "default" | "compact";
+}
+
+export function ListenPopover({
+	direction = "up",
+	size = "default",
+}: ListenPopoverProps) {
 	const [open, setOpen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -74,10 +82,27 @@ export function ListenPopover() {
 				onClick={() => setOpen((prev) => !prev)}
 				aria-haspopup="true"
 				aria-expanded={open}
-				className="flex h-[48px] w-[180px] items-center gap-3 rounded-full border border-ivory px-5 transition-colors hover:bg-ivory/10"
+				className={
+					size === "compact"
+						? "flex h-[42px] w-[144px] items-center gap-2 rounded-full border border-ivory px-4 transition-colors hover:bg-ivory/10"
+						: "flex h-[48px] w-[180px] items-center gap-3 rounded-full border border-ivory px-5 transition-colors hover:bg-ivory/10"
+				}
 			>
-				<Play size={16} className="fill-ivory text-ivory" />
-				<span className="font-body text-[10px] font-bold tracking-[1.5px] text-ivory">
+				<Play
+					size={size === "compact" ? 14 : 16}
+					className={
+						size === "compact"
+							? "fill-yellow text-yellow"
+							: "fill-ivory text-ivory"
+					}
+				/>
+				<span
+					className={
+						size === "compact"
+							? "font-body text-[10px] font-bold tracking-[1.1px] text-ivory"
+							: "font-body text-[10px] font-bold tracking-[1.5px] text-ivory"
+					}
+				>
 					LISTEN NOW
 				</span>
 			</button>
@@ -86,11 +111,13 @@ export function ListenPopover() {
 				{open && (
 					<motion.div
 						role="menu"
-						initial={{ opacity: 0, y: 8 }}
+						initial={{ opacity: 0, y: direction === "down" ? -8 : 8 }}
 						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: 8 }}
+						exit={{ opacity: 0, y: direction === "down" ? -8 : 8 }}
 						transition={{ duration: 0.15 }}
-						className="absolute bottom-full left-0 mb-2 w-[200px] overflow-hidden rounded-xl border border-lavender/20 bg-[#1a1630] shadow-lg"
+						className={`absolute left-0 w-[200px] overflow-hidden rounded-xl border border-lavender/20 bg-[#1a1630] shadow-lg ${
+							direction === "down" ? "top-full mt-2" : "bottom-full mb-2"
+						}`}
 					>
 						{LISTEN_OPTIONS.map((option) => (
 							<a
