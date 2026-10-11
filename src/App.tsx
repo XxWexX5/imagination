@@ -10,6 +10,8 @@ export function App() {
 			>
 				Imagination
 			</motion.h1>
+
+			<p>hello world!</p>
 		</main>
 	);
 }
