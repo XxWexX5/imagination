@@ -2,6 +2,7 @@ import { useLenis } from "lenis/react";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
+import { useActiveSection } from "../../lib/use-active-section.ts";
 import { ListenPopover } from "../ListenPopover/index.tsx";
 
 const NAV_LINKS = [
@@ -12,9 +13,12 @@ const NAV_LINKS = [
 	{ label: "ABOUT", href: "#about" },
 ] as const;
 
+const HEADER_HEIGHT = 66;
+const SECTION_IDS = NAV_LINKS.map((link) => link.href.slice(1));
+
 export function Header() {
 	const [mobileOpen, setMobileOpen] = useState(false);
-	const [activeLink, setActiveLink] = useState("#home");
+	const activeLink = `#${useActiveSection(SECTION_IDS, HEADER_HEIGHT)}`;
 	const lenis = useLenis();
 
 	useEffect(() => {
@@ -33,9 +37,8 @@ export function Header() {
 	const handleLinkClick = useCallback(
 		(e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
 			e.preventDefault();
-			setActiveLink(href);
 			closeMobile();
-			lenis?.scrollTo(href, { offset: -66 });
+			lenis?.scrollTo(href, { offset: -HEADER_HEIGHT });
 		},
 		[closeMobile, lenis],
 	);
@@ -59,6 +62,7 @@ export function Header() {
 							<a
 								href={link.href}
 								onClick={(e) => handleLinkClick(e, link.href)}
+								aria-current={activeLink === link.href ? "location" : undefined}
 								className={`relative font-body text-[10px] font-semibold tracking-[1.7px] transition-colors ${
 									activeLink === link.href
 										? "text-turquoise"
@@ -106,6 +110,9 @@ export function Header() {
 									<a
 										href={link.href}
 										onClick={(e) => handleLinkClick(e, link.href)}
+										aria-current={
+											activeLink === link.href ? "location" : undefined
+										}
 										className={`font-body text-sm font-semibold tracking-[1.7px] transition-colors ${
 											activeLink === link.href
 												? "text-turquoise"

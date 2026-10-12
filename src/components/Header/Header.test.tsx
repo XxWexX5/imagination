@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Header } from "./index.tsx";
 
@@ -32,17 +32,46 @@ describe("Header", () => {
 		expect(homeLink.className).toContain("text-turquoise");
 	});
 
-	it("changes active link on click", async () => {
-		const user = userEvent.setup();
+	it("activates the link of the section in view while scrolling", async () => {
+		const tops: Record<string, number> = {
+			home: -900,
+			album: 80,
+			tracks: 900,
+			artwork: 1800,
+			about: 2700,
+		};
+		const sections = Object.keys(tops).map((id) => {
+			const section = document.createElement("section");
+			section.id = id;
+			section.getBoundingClientRect = () => ({ top: tops[id] }) as DOMRect;
+			document.body.append(section);
+			return section;
+		});
+
 		render(<Header />);
 
-		const albumLink = screen.getByRole("link", { name: "ALBUM" });
-		await user.click(albumLink);
+		expect(screen.getByRole("link", { name: "ALBUM" })).toHaveAttribute(
+			"aria-current",
+			"location",
+		);
 
-		expect(albumLink.className).toContain("text-turquoise");
-		const homeClasses = screen.getByRole("link", { name: "HOME" }).className;
-		expect(homeClasses).toContain("text-ivory");
-		expect(homeClasses).not.toMatch(/(?<!\S)text-turquoise(?!\S)/);
+		tops.album = -800;
+		tops.tracks = 100;
+		window.dispatchEvent(new Event("scroll"));
+
+		await waitFor(() =>
+			expect(screen.getByRole("link", { name: "TRACKS" })).toHaveAttribute(
+				"aria-current",
+				"location",
+			),
+		);
+		expect(screen.getByRole("link", { name: "ALBUM" })).not.toHaveAttribute(
+			"aria-current",
+		);
+
+		for (const section of sections) {
+			section.remove();
+		}
 	});
 
 	it("renders the hamburger button for mobile", () => {

@@ -42,6 +42,32 @@ test.describe("Header", () => {
 
 		await expect(page.locator("#album")).toBeInViewport();
 	});
+
+	test("active link follows the section in view while scrolling", async ({
+		page,
+	}) => {
+		await page.goto("/");
+		const nav = page.getByRole("navigation", { name: "Main navigation" });
+		const current = nav.locator('a[aria-current="location"]');
+
+		await expect(current).toHaveText("HOME");
+
+		for (const [id, label] of [
+			["tracks", "TRACKS"],
+			["about", "ABOUT"],
+			["album", "ALBUM"],
+		] as const) {
+			await page.evaluate((sectionId) => {
+				const top = document.getElementById(sectionId)?.offsetTop ?? 0;
+				window.scrollTo(0, top);
+			}, id);
+
+			await expect(current).toHaveText(label);
+		}
+
+		await page.evaluate(() => window.scrollTo(0, 0));
+		await expect(current).toHaveText("HOME");
+	});
 });
 
 test.describe("Header — mobile", () => {

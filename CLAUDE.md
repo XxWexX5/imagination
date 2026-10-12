@@ -33,6 +33,7 @@
 - `src/pages/<Nome>/index.tsx` — seções/páginas da aplicação (Home, etc.)
 - `src/assets/<secao>/` — imagens de cada seção (ex.: `src/assets/album/*.webp`)
 
+- `src/lib/use-active-section.ts` — scroll-spy: devolve o id da seção em vista (usado pelo Header)
 - `src/test/setup.ts` — setup do Vitest (jest-dom, MSW); handlers em `src/test/msw/handlers.ts`
 - Testes unitários ao lado do código (`src/**/Nome.test.tsx`); e2e em `e2e/`
 - `tasks/<secao>.md` — plano de cada seção (dados do layout, passos, testes); criar antes de implementar a seção
@@ -60,3 +61,4 @@ Registro das escolhas feitas ao longo do projeto, com o motivo.
 - **Design lido pelo pen CLI** — `pen interactive --app desktop --in ~/Documents/imagination.pen` com `execute` (`Get`/`Print`) para extrair medidas e textos; não chamar `save()`. Enviar consultas filtradas (pular nós `path`): a saída por stdin é cortada perto de 73 KB.
 - **Artes vetoriais do design entram como WebP exportado do pen** (`Export([ids],"webp",<dir>)`, 2x) — cada arte tem centenas de paths; recriar em código não compensa.
 - **Seções abaixo da dobra animam com `whileInView` + `viewport={{ once: true }}`** — mesma entrada fade + slide do Hero, disparada ao rolar.
+- **Item ativo do menu segue o scroll** (`useActiveSection`) — fica ativa a última seção cujo topo passou de uma linha a 35% da área visível abaixo do header; no fim da página vale a última seção. O clique no menu não marca o item: o scroll resultante é que marca. O link ativo recebe `aria-current="location"` (usar isso nos testes, não a classe de cor).
