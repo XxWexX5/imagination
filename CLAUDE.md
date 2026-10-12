@@ -7,8 +7,7 @@
 > Não registre aqui estado passageiro (tarefas em andamento, histórico de commits).
 
 ## Stack
-- Vite + React + TypeScript (strict), pnpm
-- TanStack Query (sem Router/Start: página única, navegação por âncora)
+- Vite + React + TypeScript (strict), pnpm (página única, navegação por âncora)
 - Tailwind v4 (plugin `@tailwindcss/vite`, configuração no CSS — sem `tailwind.config`)
 - Framer Motion via pacote `motion` (importar de `motion/react`), Lenis (`lenis/react`)
 - Biome para lint e formatação (NÃO usar ESLint/Prettier)
@@ -16,7 +15,7 @@
 
 ## Regras
 - Imagens ficam em `src/assets` (nunca em `public/`) para receberem hash
-- Query keys sempre via `queryOptions` factories tipadas
+
 - Commits em Conventional Commits com Gitmoji (ex: `✨ feat: add hero section`, `🐛 fix: correct nav link`, `♻️ refactor: extract button component`)
 - Antes de finalizar: `pnpm typecheck && pnpm check && pnpm test:ci`
 
@@ -29,11 +28,11 @@
 - `pnpm test:e2e` — Playwright (faz build e sobe o preview na porta 4173)
 
 ## Estrutura
-- `src/main.tsx` — providers globais (QueryClient, Lenis); `src/App.tsx` — composição de layout
+- `src/main.tsx` — provider global (Lenis smooth scroll); `src/App.tsx` — composição de layout
 - `src/components/<Nome>/index.tsx` — componentes reutilizáveis (Header, Footer, etc.)
 - `src/pages/<Nome>/index.tsx` — seções/páginas da aplicação (Home, etc.)
 - `src/assets/<secao>/` — imagens de cada seção (ex.: `src/assets/album/*.webp`)
-- `src/lib/query-client.ts` — `createQueryClient()`
+
 - `src/test/setup.ts` — setup do Vitest (jest-dom, MSW); handlers em `src/test/msw/handlers.ts`
 - Testes unitários ao lado do código (`src/**/Nome.test.tsx`); e2e em `e2e/`
 - `tasks/<secao>.md` — plano de cada seção (dados do layout, passos, testes); criar antes de implementar a seção
@@ -50,10 +49,8 @@
 ## Decisões
 Registro das escolhas feitas ao longo do projeto, com o motivo.
 
-- **Sem TanStack Router/Start** — a aplicação é uma página única; a navegação é feita por âncoras.
 - **Biome no lugar de ESLint/Prettier** — uma única ferramenta para lint e formatação.
 - **Imagens em `src/assets`** — passam pelo bundler e recebem hash no nome (cache busting); `public/` não recebe.
-- **Query keys via `queryOptions` factories** — chaves tipadas e centralizadas, sem strings soltas.
 - **Pacote `motion` em vez de `framer-motion`** — é o nome atual da mesma biblioteca.
 - **E2E roda contra o build de produção** (`vite preview`) — testa o que será publicado, não o dev server.
 - **Playwright só com Chromium** — suficiente para o início; adicionar outros browsers quando necessário.
