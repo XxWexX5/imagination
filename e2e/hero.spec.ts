@@ -55,7 +55,7 @@ test.describe("Hero section", () => {
 		await expect(page.getByRole("menuitem", { name: /Spotify/ })).toBeVisible();
 		await expect(page.getByRole("menuitem", { name: /YouTube/ })).toBeVisible();
 		await expect(
-			page.getByRole("menuitem", { name: /Na página/ }),
+			page.getByRole("menuitem", { name: /Play Now/ }),
 		).toBeVisible();
 	});
 

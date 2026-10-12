@@ -30,8 +30,8 @@ const LISTEN_OPTIONS = [
 		),
 	},
 	{
-		label: "Na página",
-		href: "#listen",
+		label: "Play Now",
+		href: "#tracks",
 		external: false,
 		icon: <Play size={18} />,
 	},

@@ -18,8 +18,9 @@ const queryClient = createQueryClient();
 createRoot(root).render(
 	<StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<ReactLenis root />
-			<App />
+			<ReactLenis root>
+				<App />
+			</ReactLenis>
 			<ReactQueryDevtools />
 		</QueryClientProvider>
 	</StrictMode>,

@@ -33,7 +33,7 @@ describe("ListenPopover", () => {
 			screen.getByRole("menuitem", { name: /youtube/i }),
 		).toBeInTheDocument();
 		expect(
-			screen.getByRole("menuitem", { name: /na página/i }),
+			screen.getByRole("menuitem", { name: /play now/i }),
 		).toBeInTheDocument();
 	});
 
@@ -100,7 +100,7 @@ describe("ListenPopover", () => {
 
 		await user.click(screen.getByRole("button", { name: /listen now/i }));
 
-		const naPage = screen.getByRole("menuitem", { name: /na página/i });
-		expect(naPage).not.toHaveAttribute("target");
+		const playNow = screen.getByRole("menuitem", { name: /play now/i });
+		expect(playNow).not.toHaveAttribute("target");
 	});
 });
