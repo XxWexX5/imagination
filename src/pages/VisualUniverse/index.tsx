@@ -23,7 +23,11 @@ const viewport = { once: true, amount: 0.2 };
 
 export function VisualUniverse() {
 	return (
-		<section id="artwork" className="scroll-mt-[66px] bg-navy">
+		<section
+			id="artwork"
+			className="scroll-mt-[66px]"
+			style={{ backgroundColor: "#08183b" }}
+		>
 			<div className="mx-auto grid max-w-[1440px] gap-16 px-6 py-20 md:px-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-10 lg:px-[84px]">
 				<motion.div
 					className="flex flex-col items-start"

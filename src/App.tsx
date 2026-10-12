@@ -10,6 +10,7 @@ import torches from "./assets/images/torches.webp";
 import { Header } from "./components/Header/index.tsx";
 import { MusicToggle } from "./components/MusicToggle/index.tsx";
 import { usePreloadImages } from "./lib/use-preload-images.ts";
+import { About } from "./pages/About/index.tsx";
 import { Album } from "./pages/Album/index.tsx";
 import { Home } from "./pages/Home/index.tsx";
 import { Tracks } from "./pages/Tracks/index.tsx";
@@ -37,6 +38,7 @@ export function App() {
 				<Album />
 				<Tracks />
 				<VisualUniverse />
+				<About />
 			</main>
 			<MusicToggle />
 		</>
