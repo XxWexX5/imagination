@@ -52,14 +52,14 @@ A single-page, immersive landing experience built as an independent fan-made con
 
 The visual language is defined through CSS custom properties — no `tailwind.config` file, everything lives in CSS with Tailwind v4.
 
-```
-$night     #0b0916    ████  Deep navy — primary background
-$sun       #f5c543    ████  Warm yellow — wordmark & accents
-$lagoon    #2dd4bf    ████  Turquoise — eyebrows & highlights
-$paper     #f5f0e8    ████  Ivory — headings & primary text
-$haze      #8D7BA8    ████  Lavender — body text & subtle elements
-$tangerine #FF7438    ████  Orange — decorative glows
-```
+| Token | Color | Hex | Role |
+|:-----:|:-----:|-----|------|
+| `$night` | ![#0b0916](https://singlecolorimage.com/get/0b0916/24x24) | `#0b0916` | Deep navy — primary background |
+| `$sun` | ![#f5c543](https://singlecolorimage.com/get/f5c543/24x24) | `#f5c543` | Warm yellow — wordmark & accents |
+| `$lagoon` | ![#2dd4bf](https://singlecolorimage.com/get/2dd4bf/24x24) | `#2dd4bf` | Turquoise — eyebrows & highlights |
+| `$paper` | ![#f5f0e8](https://singlecolorimage.com/get/f5f0e8/24x24) | `#f5f0e8` | Ivory — headings & primary text |
+| `$haze` | ![#8D7BA8](https://singlecolorimage.com/get/8D7BA8/24x24) | `#8D7BA8` | Lavender — body text & subtle elements |
+| `$tangerine` | ![#FF7438](https://singlecolorimage.com/get/FF7438/24x24) | `#FF7438` | Orange — decorative glows |
 
 **Typography**: Playfair Display (display) + Inter (body)
 
