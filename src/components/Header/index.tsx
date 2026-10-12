@@ -1,3 +1,4 @@
+import { useLenis } from "lenis/react";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
@@ -14,6 +15,7 @@ const NAV_LINKS = [
 export function Header() {
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const [activeLink, setActiveLink] = useState("#home");
+	const lenis = useLenis();
 
 	useEffect(() => {
 		if (mobileOpen) {
@@ -29,11 +31,13 @@ export function Header() {
 	const closeMobile = useCallback(() => setMobileOpen(false), []);
 
 	const handleLinkClick = useCallback(
-		(href: string) => {
+		(e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+			e.preventDefault();
 			setActiveLink(href);
 			closeMobile();
+			lenis?.scrollTo(href, { offset: -66 });
 		},
-		[closeMobile],
+		[closeMobile, lenis],
 	);
 
 	return (
@@ -54,7 +58,7 @@ export function Header() {
 						<li key={link.href}>
 							<a
 								href={link.href}
-								onClick={() => handleLinkClick(link.href)}
+								onClick={(e) => handleLinkClick(e, link.href)}
 								className={`relative font-body text-[10px] font-semibold tracking-[1.7px] transition-colors ${
 									activeLink === link.href
 										? "text-turquoise"
@@ -101,7 +105,7 @@ export function Header() {
 								<li key={link.href}>
 									<a
 										href={link.href}
-										onClick={() => handleLinkClick(link.href)}
+										onClick={(e) => handleLinkClick(e, link.href)}
 										className={`font-body text-sm font-semibold tracking-[1.7px] transition-colors ${
 											activeLink === link.href
 												? "text-turquoise"

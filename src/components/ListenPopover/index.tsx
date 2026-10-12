@@ -1,3 +1,4 @@
+import { useLenis } from "lenis/react";
 import { Play } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -48,6 +49,7 @@ export function ListenPopover({
 }: ListenPopoverProps) {
 	const [open, setOpen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const lenis = useLenis();
 
 	const close = useCallback(() => setOpen(false), []);
 
@@ -124,7 +126,13 @@ export function ListenPopover({
 								key={option.label}
 								href={option.href}
 								role="menuitem"
-								onClick={close}
+								onClick={(e) => {
+									if (!option.external) {
+										e.preventDefault();
+										lenis?.scrollTo(option.href, { offset: -66 });
+									}
+									close();
+								}}
 								{...(option.external
 									? { target: "_blank", rel: "noopener noreferrer" }
 									: {})}

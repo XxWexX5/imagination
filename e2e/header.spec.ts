@@ -37,10 +37,10 @@ test.describe("Header", () => {
 	test("navigation links scroll to sections", async ({ page }) => {
 		await page.goto("/");
 
-		const homeLink = page.getByRole("link", { name: "HOME" }).first();
-		await homeLink.click();
+		const albumLink = page.getByRole("link", { name: "ALBUM" }).first();
+		await albumLink.click();
 
-		expect(page.url()).toContain("#home");
+		await expect(page.locator("#album")).toBeInViewport();
 	});
 });
 

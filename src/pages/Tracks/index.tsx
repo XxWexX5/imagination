@@ -91,7 +91,7 @@ export function Tracks() {
 
 	return (
 		<section id="tracks" className="scroll-mt-[66px] bg-navy">
-			<div className="mx-auto grid max-w-[1440px] gap-16 px-6 py-20 md:px-16 lg:grid-cols-[minmax(0,1fr)_610px] lg:gap-10 lg:px-[84px]">
+			<div className="mx-auto grid max-w-[1440px] gap-16 px-6 py-32 md:px-16 lg:grid-cols-[minmax(0,1fr)_610px] lg:gap-10 lg:px-[84px]">
 				<motion.div
 					className="flex flex-col items-start"
 					initial={{ opacity: 0, y: 20 }}
