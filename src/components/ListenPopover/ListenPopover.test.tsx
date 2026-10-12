@@ -103,4 +103,51 @@ describe("ListenPopover", () => {
 		const playNow = screen.getByRole("menuitem", { name: /play now/i });
 		expect(playNow).not.toHaveAttribute("target");
 	});
+
+	it("moves focus into the menu and cycles items with arrow keys", async () => {
+		const user = userEvent.setup();
+		render(<ListenPopover />);
+
+		await user.click(screen.getByRole("button", { name: /listen now/i }));
+
+		const items = screen.getAllByRole("menuitem");
+		expect(items[0]).toHaveFocus();
+
+		await user.keyboard("{ArrowDown}");
+		expect(items[1]).toHaveFocus();
+
+		await user.keyboard("{End}");
+		expect(items.at(-1)).toHaveFocus();
+
+		await user.keyboard("{ArrowDown}");
+		expect(items[0]).toHaveFocus();
+
+		await user.keyboard("{ArrowUp}");
+		expect(items.at(-1)).toHaveFocus();
+	});
+
+	it("returns focus to the button when closed with Escape", async () => {
+		const user = userEvent.setup();
+		render(<ListenPopover />);
+
+		const button = screen.getByRole("button", { name: /listen now/i });
+		await user.click(button);
+		await user.keyboard("{Escape}");
+
+		expect(button).toHaveFocus();
+		expect(button).toHaveAttribute("aria-expanded", "false");
+	});
+
+	it("announces that external links open in a new tab", async () => {
+		const user = userEvent.setup();
+		render(<ListenPopover />);
+
+		await user.click(screen.getByRole("button", { name: /listen now/i }));
+
+		expect(
+			screen.getByRole("menuitem", {
+				name: /spotify\s*\(opens in a new tab\)/i,
+			}),
+		).toBeInTheDocument();
+	});
 });

@@ -32,15 +32,21 @@ export function App() {
 
 	return (
 		<>
+			<a
+				href="#main"
+				className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-ivory focus:px-5 focus:py-3 focus:font-body focus:text-xs focus:font-bold focus:tracking-[1.2px] focus:text-navy"
+			>
+				SKIP TO MAIN CONTENT
+			</a>
 			<Header />
-			<main className="pt-[66px]">
+			<MusicToggle />
+			<main id="main" tabIndex={-1} className="pt-[66px]">
 				<Home />
 				<Album />
 				<Tracks />
 				<VisualUniverse />
 				<About />
 			</main>
-			<MusicToggle />
 		</>
 	);
 }

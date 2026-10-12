@@ -1,7 +1,8 @@
 import { useLenis } from "lenis/react";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { HEADER_HEIGHT, scrollToSection } from "../../lib/scroll-to-section.ts";
 import { useActiveSection } from "../../lib/use-active-section.ts";
 import { ListenPopover } from "../ListenPopover/index.tsx";
 
@@ -13,22 +14,33 @@ const NAV_LINKS = [
 	{ label: "ABOUT", href: "#about" },
 ] as const;
 
-const HEADER_HEIGHT = 66;
 const SECTION_IDS = NAV_LINKS.map((link) => link.href.slice(1));
 
 export function Header() {
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const activeLink = `#${useActiveSection(SECTION_IDS, HEADER_HEIGHT)}`;
 	const lenis = useLenis();
+	const menuButtonRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
-		if (mobileOpen) {
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "";
+		const main = document.getElementById("main");
+		document.body.style.overflow = mobileOpen ? "hidden" : "";
+		main?.toggleAttribute("inert", mobileOpen);
+
+		if (!mobileOpen) return;
+
+		function handleEscape(e: KeyboardEvent) {
+			if (e.key === "Escape") {
+				setMobileOpen(false);
+				menuButtonRef.current?.focus();
+			}
 		}
+
+		document.addEventListener("keydown", handleEscape);
 		return () => {
+			document.removeEventListener("keydown", handleEscape);
 			document.body.style.overflow = "";
+			main?.removeAttribute("inert");
 		};
 	}, [mobileOpen]);
 
@@ -38,7 +50,7 @@ export function Header() {
 		(e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
 			e.preventDefault();
 			closeMobile();
-			lenis?.scrollTo(href, { offset: -HEADER_HEIGHT });
+			scrollToSection(lenis, href);
 		},
 		[closeMobile, lenis],
 	);
@@ -84,10 +96,12 @@ export function Header() {
 					</div>
 
 					<button
+						ref={menuButtonRef}
 						type="button"
 						className="text-ivory md:hidden"
 						onClick={() => setMobileOpen((prev) => !prev)}
 						aria-expanded={mobileOpen}
+						aria-controls="mobile-menu"
 						aria-label={mobileOpen ? "Close menu" : "Open menu"}
 					>
 						{mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -98,6 +112,7 @@ export function Header() {
 			<AnimatePresence>
 				{mobileOpen && (
 					<motion.div
+						id="mobile-menu"
 						className="fixed inset-0 top-[66px] z-40 bg-navy md:hidden"
 						initial={{ opacity: 0, y: -16 }}
 						animate={{ opacity: 1, y: 0 }}

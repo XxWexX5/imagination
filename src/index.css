@@ -14,6 +14,15 @@
 	--font-body: "Inter", sans-serif;
 }
 
+:focus-visible {
+	outline: 2px solid var(--color-yellow);
+	outline-offset: 3px;
+}
+
+[tabindex="-1"]:focus-visible {
+	outline: none;
+}
+
 body {
 	font-family: var(--font-body);
 	background-color: var(--color-navy);

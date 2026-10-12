@@ -62,7 +62,7 @@ export function Home() {
 				animate={{ opacity: 1 }}
 				transition={{ delay: 0.8 }}
 			>
-				SCROLL TO EXPLORE &nbsp;&nbsp; ↓
+				SCROLL TO EXPLORE &nbsp;&nbsp; <span aria-hidden="true">↓</span>
 			</motion.span>
 		</section>
 	);

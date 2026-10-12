@@ -25,7 +25,7 @@
 - `pnpm typecheck` — `tsc -b`
 - `pnpm check` / `pnpm check:fix` — Biome (lint + formatação)
 - `pnpm test` (watch) / `pnpm test:ci` (execução única) — Vitest
-- `pnpm test:e2e` — Playwright (faz build e sobe o preview na porta 4173)
+- `pnpm test:e2e` — Playwright (faz build e sobe o preview na porta 4173); inclui a auditoria axe em `e2e/a11y.spec.ts`
 
 ## Estrutura
 - `src/main.tsx` — provider global (Lenis smooth scroll); `src/App.tsx` — composição de layout
@@ -33,6 +33,7 @@
 - `src/pages/<Nome>/index.tsx` — seções/páginas da aplicação (Home, etc.)
 - `src/assets/<secao>/` — imagens de cada seção (ex.: `src/assets/album/*.webp`)
 
+- `src/lib/scroll-to-section.ts` — `scrollToSection()` (rola via Lenis e move o foco para a seção), `prefersReducedMotion()`, `HEADER_HEIGHT`
 - `src/lib/use-active-section.ts` — scroll-spy: devolve o id da seção em vista (usado pelo Header)
 - `src/test/setup.ts` — setup do Vitest (jest-dom, MSW); handlers em `src/test/msw/handlers.ts`
 - Testes unitários ao lado do código (`src/**/Nome.test.tsx`); e2e em `e2e/`
@@ -46,6 +47,21 @@
 - `IntersectionObserver` tem stub em `src/test/setup.ts` (o jsdom não tem; `whileInView` do motion precisa)
 - E2E: escopar locators pela seção (`page.locator("#home")…`), pois textos e botões se repetem entre seções (ex.: "LISTEN NOW" no header e no hero)
 - MSW v3: a opção é `onUnhandledFrame` (não `onUnhandledRequest`); está em `"error"`, então toda requisição em teste precisa de handler
+
+## Acessibilidade
+Alvo: WCAG 2.2 AA. `e2e/a11y.spec.ts` roda o axe (`@axe-core/playwright`) na página, com o menu Listen Now aberto e com o menu mobile aberto; toda seção ou componente novo deve continuar passando.
+
+- Idioma do documento é `en` (todo o conteúdo é em inglês)
+- Skip link "SKIP TO MAIN CONTENT" é o primeiro foco e leva a `<main id="main">`
+- Foco visível global (`:focus-visible` amarelo em `src/index.css`); não remover outline em componentes
+- Navegação por âncora usa `scrollToSection()`, que também move o foco para a seção de destino
+- Movimento reduzido (`prefers-reduced-motion`): `MotionConfig reducedMotion="user"`, Lenis sem smooth wheel, scroll por âncora imediato, carrossel sem autoplay, animações CSS do hero dentro de `@media (prefers-reduced-motion: no-preference)`
+- Menu Listen Now segue o padrão menu button: foco no 1º item ao abrir, setas/Home/End, Escape fecha e devolve o foco, Tab fecha
+- Menu mobile: Escape fecha e devolve o foco ao botão; `<main>` fica `inert` enquanto está aberto
+- Links que abrem nova aba levam o texto `sr-only` "(opens in a new tab)"
+- `MusicToggle` fica logo depois do Header no DOM para ser alcançado cedo pelo teclado
+- Slides do carrossel usam `<fieldset>`: o Biome rejeita `role="group"` em `div`
+- Sem `!important` em CSS (regra do Biome)
 
 ## Decisões
 Registro das escolhas feitas ao longo do projeto, com o motivo.
@@ -62,3 +78,4 @@ Registro das escolhas feitas ao longo do projeto, com o motivo.
 - **Artes vetoriais do design entram como WebP exportado do pen** (`Export([ids],"webp",<dir>)`, 2x) — cada arte tem centenas de paths; recriar em código não compensa.
 - **Seções abaixo da dobra animam com `whileInView` + `viewport={{ once: true }}`** — mesma entrada fade + slide do Hero, disparada ao rolar.
 - **Item ativo do menu segue o scroll** (`useActiveSection`) — fica ativa a última seção cujo topo passou de uma linha a 35% da área visível abaixo do header; no fim da página vale a última seção. O clique no menu não marca o item: o scroll resultante é que marca. O link ativo recebe `aria-current="location"` (usar isso nos testes, não a classe de cor).
+- **Auditoria de acessibilidade com axe no e2e** (`@axe-core/playwright`) — pega regressões de WCAG automaticamente; os comportamentos de teclado e foco têm testes próprios porque o axe não os cobre.

@@ -2,6 +2,7 @@ import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
+import { prefersReducedMotion } from "../../lib/scroll-to-section.ts";
 
 interface CarouselImage {
 	src: string;
@@ -14,9 +15,19 @@ interface ImageCarouselProps {
 
 export function ImageCarousel({ images }: ImageCarouselProps) {
 	const [selectedIndex, setSelectedIndex] = useState(0);
-	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-		Autoplay({ delay: 4000, stopOnInteraction: true }),
-	]);
+	const [emblaRef, emblaApi] = useEmblaCarousel(
+		{ loop: true },
+		prefersReducedMotion()
+			? []
+			: [
+					Autoplay({
+						delay: 4000,
+						stopOnInteraction: true,
+						stopOnMouseEnter: true,
+						stopOnFocusIn: true,
+					}),
+				],
+	);
 
 	const onSelect = useCallback(() => {
 		if (!emblaApi) return;

@@ -62,6 +62,7 @@ export function Album() {
 						className="mt-12 inline-flex h-[46px] items-center gap-2 rounded-full border border-turquoise px-5 font-body text-[10px] font-bold tracking-[1.2px] text-turquoise transition-colors hover:bg-turquoise hover:text-navy lg:mt-32"
 					>
 						EXPLORE ARTWORK
+						<span className="sr-only"> (opens in a new tab)</span>
 						<ArrowUpRight aria-hidden="true" className="size-3" />
 					</a>
 				</motion.div>

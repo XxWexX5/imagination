@@ -1,7 +1,8 @@
 import { useLenis } from "lenis/react";
 import { Play } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { scrollToSection } from "../../lib/scroll-to-section.ts";
 
 const LISTEN_OPTIONS = [
 	{
@@ -49,6 +50,9 @@ export function ListenPopover({
 }: ListenPopoverProps) {
 	const [open, setOpen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const buttonRef = useRef<HTMLButtonElement>(null);
+	const menuRef = useRef<HTMLDivElement>(null);
+	const menuId = useId();
 	const lenis = useLenis();
 
 	const close = useCallback(() => setOpen(false), []);
@@ -66,8 +70,13 @@ export function ListenPopover({
 		}
 
 		function handleEscape(e: KeyboardEvent) {
-			if (e.key === "Escape") close();
+			if (e.key === "Escape") {
+				close();
+				buttonRef.current?.focus();
+			}
 		}
+
+		menuRef.current?.querySelector<HTMLElement>('[role="menuitem"]')?.focus();
 
 		document.addEventListener("mousedown", handleClickOutside);
 		document.addEventListener("keydown", handleEscape);
@@ -77,13 +86,47 @@ export function ListenPopover({
 		};
 	}, [open, close]);
 
+	function handleMenuKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+		const items = Array.from(
+			e.currentTarget.querySelectorAll<HTMLElement>('[role="menuitem"]'),
+		);
+		const index = items.indexOf(document.activeElement as HTMLElement);
+		const last = items.length - 1;
+		let next: number;
+
+		switch (e.key) {
+			case "ArrowDown":
+				next = index === last ? 0 : index + 1;
+				break;
+			case "ArrowUp":
+				next = index <= 0 ? last : index - 1;
+				break;
+			case "Home":
+				next = 0;
+				break;
+			case "End":
+				next = last;
+				break;
+			case "Tab":
+				close();
+				return;
+			default:
+				return;
+		}
+
+		e.preventDefault();
+		items[next]?.focus();
+	}
+
 	return (
 		<div ref={containerRef} className="relative inline-block">
 			<button
+				ref={buttonRef}
 				type="button"
 				onClick={() => setOpen((prev) => !prev)}
-				aria-haspopup="true"
+				aria-haspopup="menu"
 				aria-expanded={open}
+				aria-controls={open ? menuId : undefined}
 				className={
 					size === "compact"
 						? "flex h-[42px] w-[144px] items-center gap-2 rounded-full border border-ivory px-4 transition-colors hover:bg-ivory/10"
@@ -112,7 +155,11 @@ export function ListenPopover({
 			<AnimatePresence>
 				{open && (
 					<motion.div
+						ref={menuRef}
+						id={menuId}
 						role="menu"
+						aria-label="Listen options"
+						onKeyDown={handleMenuKeyDown}
 						initial={{ opacity: 0, y: direction === "down" ? -8 : 8 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: direction === "down" ? -8 : 8 }}
@@ -126,10 +173,11 @@ export function ListenPopover({
 								key={option.label}
 								href={option.href}
 								role="menuitem"
+								tabIndex={-1}
 								onClick={(e) => {
 									if (!option.external) {
 										e.preventDefault();
-										lenis?.scrollTo(option.href, { offset: -66 });
+										scrollToSection(lenis, option.href);
 									}
 									close();
 								}}
@@ -141,6 +189,9 @@ export function ListenPopover({
 								<span className="text-turquoise">{option.icon}</span>
 								<span className="font-body text-xs font-semibold tracking-wide">
 									{option.label}
+									{option.external && (
+										<span className="sr-only"> (opens in a new tab)</span>
+									)}
 								</span>
 							</a>
 						))}

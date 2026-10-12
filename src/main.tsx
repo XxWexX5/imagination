@@ -1,7 +1,9 @@
 import { ReactLenis } from "lenis/react";
+import { MotionConfig } from "motion/react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App.tsx";
+import { prefersReducedMotion } from "./lib/scroll-to-section.ts";
 import "./index.css";
 
 const root = document.getElementById("root");
@@ -12,8 +14,10 @@ if (!root) {
 
 createRoot(root).render(
 	<StrictMode>
-		<ReactLenis root>
-			<App />
-		</ReactLenis>
+		<MotionConfig reducedMotion="user">
+			<ReactLenis root options={{ smoothWheel: !prefersReducedMotion() }}>
+				<App />
+			</ReactLenis>
+		</MotionConfig>
 	</StrictMode>,
 );

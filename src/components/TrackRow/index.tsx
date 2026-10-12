@@ -20,6 +20,7 @@ export function TrackRow({ track, isPlaying, onToggle }: TrackRowProps) {
 			onClick={onToggle}
 			className="group flex w-full items-center border-b border-lavender/30 px-5 py-6 text-left transition-colors hover:bg-white/5"
 		>
+			<span className="sr-only">{isPlaying ? "Pause" : "Play"} track </span>
 			<span className="w-[60px] shrink-0 font-body text-[10px] font-semibold tracking-[1.3px] text-lavender">
 				{track.number}
 			</span>
